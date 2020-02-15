@@ -1,0 +1,28 @@
+name: BuilderUtils
+version: ${project.version}
+main: net.graymadness.builder_utils.BuilderPlugin
+api-version: 1.15
+author: GrayMadness
+authors: [Abit]
+prefix: Builder
+commands:
+  speed:
+    description: Gives you speed effect
+  nightvision:
+    description: Gives you nightvision effect
+  back:
+    description: Teleport you back to original location
+    permission: builder.back
+permissions:
+  builder.*:
+    default: op
+    children:
+      builder.speed: true
+      builder.nightvision: true
+      builder.back: true
+  builder.speed:
+    description: Use /speed <level>
+  builder.nightvision:
+    description: Use /nightvision
+  builder.back:
+    description: Use /back
