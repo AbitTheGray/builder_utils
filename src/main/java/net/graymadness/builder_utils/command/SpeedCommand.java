@@ -59,7 +59,7 @@ public class SpeedCommand implements Listener, CommandExecutor, TabCompleter
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 60 * 60 * 24, amplifier, false, false), true);
         player.setFlySpeed(Math.max(0.1f * mult, 1f));
-        player.setWalkSpeed(Math.max(0.1f * mult, 1f));
+        player.setWalkSpeed(Math.max(0.2f * mult, 1f));
         player.getAttribute(Attribute.GENERIC_FLYING_SPEED).setBaseValue(0.4000000059604645 * mult);
         player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.699999988079071 * mult);
 
@@ -84,7 +84,7 @@ public class SpeedCommand implements Listener, CommandExecutor, TabCompleter
     {
         player.removePotionEffect(PotionEffectType.SPEED);
         player.setFlySpeed(0.1f);
-        player.setWalkSpeed(0.1f);
+        player.setWalkSpeed(0.2f);
         player.getAttribute(Attribute.GENERIC_FLYING_SPEED).setBaseValue(0.4000000059604645);
         player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.699999988079071);
     }
