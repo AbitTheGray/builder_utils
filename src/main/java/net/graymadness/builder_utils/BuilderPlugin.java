@@ -3,6 +3,7 @@ package net.graymadness.builder_utils;
 import net.graymadness.builder_utils.command.BackCommand;
 import net.graymadness.builder_utils.command.NightvisionCommand;
 import net.graymadness.builder_utils.command.SpeedCommand;
+import net.graymadness.builder_utils.event.ServerStopEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Listener;
@@ -58,7 +59,7 @@ public final class BuilderPlugin extends JavaPlugin implements Listener
     @Override
     public void onDisable()
     {
-
+        Bukkit.getPluginManager().callEvent(new ServerStopEvent());
     }
 
     @NotNull
