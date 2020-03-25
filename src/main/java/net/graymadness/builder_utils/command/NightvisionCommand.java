@@ -4,7 +4,6 @@ import net.graymadness.builder_utils.BuilderPlugin;
 import net.graymadness.builder_utils.event.ServerStopEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -40,7 +39,10 @@ public class NightvisionCommand implements Listener, CommandExecutor, TabComplet
         }
         Player player = (Player) sender;
 
-       player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 20 * 60 * 60 * 24, 0, false, false), true);
+        if(player.hasPotionEffect(PotionEffectType.NIGHT_VISION))
+            player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+        else
+            player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 20 * 60 * 60 * 24, 0, false, false));
 
         return false;
     }
