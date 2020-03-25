@@ -5,6 +5,7 @@ import net.graymadness.builder_utils.event.ServerStopEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,10 +17,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SpeedCommand implements Listener, CommandExecutor, TabCompleter
@@ -55,13 +54,39 @@ public class SpeedCommand implements Listener, CommandExecutor, TabCompleter
             }
         }
 
-        int mult = amplifier + 2;
+        if(amplifier <= 0)
+        {
+            player.getActivePotionEffects().clear();
+            player.removePotionEffect(PotionEffectType.SPEED);
 
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 60 * 60 * 24, amplifier, false, false), true);
-        player.setFlySpeed(Math.max(0.1f * mult, 1f));
-        player.setWalkSpeed(Math.max(0.2f * mult, 1f));
-        player.getAttribute(Attribute.GENERIC_FLYING_SPEED).setBaseValue(0.4000000059604645 * mult);
-        player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.699999988079071 * mult);
+            player.setFlySpeed(0.1f);
+            player.setWalkSpeed(0.2f);
+
+            AttributeInstance attrFly = player.getAttribute(Attribute.GENERIC_FLYING_SPEED);
+            if(attrFly != null)
+                attrFly.setBaseValue(0.4000000059604645);
+
+            AttributeInstance attrMove = player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+            if(attrMove != null)
+                attrMove.setBaseValue(0.699999988079071);
+        }
+        else
+        {
+            int mult = amplifier + 2;
+
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 60 * 60 * 24, amplifier - 1, false, false), true);
+
+            player.setFlySpeed(Math.max(0.1f * mult, 1f));
+            player.setWalkSpeed(Math.max(0.2f * mult, 1f));
+
+            AttributeInstance attrFly = player.getAttribute(Attribute.GENERIC_FLYING_SPEED);
+            if(attrFly != null)
+                attrFly.setBaseValue(0.4000000059604645 * mult);
+
+            AttributeInstance attrMove = player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+            if(attrMove != null)
+                attrMove.setBaseValue(0.699999988079071 * mult);
+        }
 
         return false;
     }
@@ -85,8 +110,14 @@ public class SpeedCommand implements Listener, CommandExecutor, TabCompleter
         player.removePotionEffect(PotionEffectType.SPEED);
         player.setFlySpeed(0.1f);
         player.setWalkSpeed(0.2f);
-        player.getAttribute(Attribute.GENERIC_FLYING_SPEED).setBaseValue(0.4000000059604645);
-        player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.699999988079071);
+
+        AttributeInstance attrFly = player.getAttribute(Attribute.GENERIC_FLYING_SPEED);
+        if(attrFly != null)
+            attrFly.setBaseValue(0.4000000059604645);
+
+        AttributeInstance attrMove = player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+        if(attrMove != null)
+            attrMove.setBaseValue(0.699999988079071);
     }
 
     @EventHandler
